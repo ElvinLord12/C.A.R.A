@@ -1,0 +1,17 @@
+const primaryStart = '#f18a69';
+const primaryEnd = '#d13e60';
+const oliveGreen = '#004d40';
+const lightGreen = '#69f0ae';
+const panelStart = '#689ACA';
+const panelEnd = '#000000';
+export const primaryGradientArray = [oliveGreen, lightGreen];
+export const panelGradientArray = [panelStart, panelEnd]
+export const lightWhite = '#fcefe9';
+export const inputPlaceholder = '#f1a895';
+export const lighterWhite = '#f4e4e2';
+export const circleInactive = '#ecbfbe';
+export const circleActive = '#90ee90';
+export const itemListText = '#555555';
+export const itemListTextStrike = '#c4c4cc';
+export const deleteIconColor = '#bc2e4c';
+export const black = '#000000';

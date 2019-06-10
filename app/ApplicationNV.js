@@ -18,12 +18,6 @@ const LATITUDE_DELTA = 0.0922;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 export default class App extends Component {
-    
-    renderMarker(lat,lon,title){
-        return(
-            <Marker coordinate={{latitude: lat, longitude: lon}} title={title}/>
-        )
-    }
 
     render() {
         return (
@@ -39,10 +33,6 @@ export default class App extends Component {
                     }}
                 >
                     <Polyline coordinates={[{latitude: 42.42268, longitude:-76.4952},{latitude: 42.41747, longitude: -76.49803}]}/>
-                    {/*hardcoded markers*/}
-                    {this.renderMarker(42.42268,-76.4952,"Williams Hall")}
-                    {this.renderMarker(42.42235,-76.49429, "Campus Center")}
-                    
 
                 </MapView>
             </View>

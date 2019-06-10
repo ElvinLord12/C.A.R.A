@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Friends Hall",
+    "address": "",
+    "coords": {
+      "latitude": 42.421736,
+      "longitude": -76.496741
+    },
+    "image_url": "https://media.glassdoor.com/l/de/cd/ae/b6/the-face-shop.jpg"
+  },
+  {
+    "name": "Job Hall",
+    "address": "",
+    "coords": {
+      "latitude": 42.421506,
+      "longitude": -76.497256
+    },
+    "image_url": "http://dreamercosmetic.com/uploads/source/chekd101/trangdiem/bomyphamchanel5moncaocap11600x450.jpg"
+  },
+  {
+    "name": "Smiddy Hall",
+    "address": "",
+    "coords": {
+      "latitude": 42.42033,
+      "longitude": -76.49849
+    },
+    "image_url": "https://www.vinpearl.com/landmark81/wp-content/uploads/sites/39/2018/09/VP-Luxury-Landmark-81-22-bot.jpg"
+  },
+  {
+    "name": "Williams Hall",
+    "address": "",
+    "coords": {
+      "latitude": 42.41846,
+      "longitude": -76.500005
+    },
+    "image_url": "http://i.dtinews.vn/images/editor/images/ngovan/12018/19/Big/pho-di-bo-bui-vien-anh-hoang-trieuimg8663-1516201119295.jpg"
+  },
+  {
+    "name": "Campus Center",
+    "address": "Campus Center Way, Ithaca, NY, 14850",
+    "coords": {
+      "latitude": 42.42235,
+      "longitude": -76.49429
+    },
+    "image_url": "http://static.asiawebdirect.com/m/bangkok/portals/vietnam/homepage/ho-chi-minh-city/ben-thanh-market/allParagraphs/BucketComponent/ListingContainer/03/image/ben-thanh-market-ext.jpg"
+  }
+]
