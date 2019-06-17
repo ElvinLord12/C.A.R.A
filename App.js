@@ -8,18 +8,18 @@ import LoginScreen from './app/screen/LoginScreen'
 import SignupScreen from './app/screen/SignupScreen'
 import MapScreen from './app/screen/MapScreen'
 import HTTPScreen from './app/examples/HTTPRequests'
+import ProfileScreen from './app/screen/ProfileScreen'
 
 
 const Nav = createStackNavigator(
     {
-        Home: LoginScreen,
-        Signup: SignupScreen,
-        Map: MapScreen,
+        // Home: LoginScreen,
+        // Signup: SignupScreen,
+        // Map: MapScreen,
+        Profile: ProfileScreen
     }
 )
 const App = createAppContainer(Nav);
 
 export default App
-
-
 

@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
             marginBottom: 50,
         },
         logoText:{
-            fontcolor: '#C04A3F',
             fontSize: 35,
             fontWeight: '500',
             marginBottom: 20,

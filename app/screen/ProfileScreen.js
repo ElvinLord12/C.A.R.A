@@ -5,11 +5,10 @@
  class ProfileScreen extends React.Component{
      render(){
          return(
-             <View>
-                 <Image
-                     style={}
-                     source={require('assets/profileEmpty.png')}/>
-
+             <View style={styles.profileContainer}>
+                     <Image
+                    style={{width: 50, height: 50}}
+                    source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
              </View>
          )
      }
@@ -17,20 +16,20 @@
  const BottomTab = createBottomTabNavigator(
      {
          Profile:{
-             screen: ProfileScreen
+             screen: ProfileScreen,
          }
      }
  )
 
  const styles = StyleSheet.create({
      profileContainer: {
-         flex: 1,
-         profil
      },
      profileImage: {
-         alignItems: 'center'
      }
 
      }
 
  )
+
+ const App = createAppContainer(BottomTab);
+ export default App
