@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert, AlertIOS} from 'react-native'
+import {View, Text, Button, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions} from 'react-native'
 import {LinearGradient} from 'expo'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -26,8 +26,26 @@ export default class SignupScreen extends React.Component {
     };
     onCreateAcctPress = () => {
         this.checkPassword()
-        Alert.alert("Username: " + this.state.username + " Email Address: " +
-        this.state.email + " Full Name: " + this.state.fullname + " Password: " + this.state.password)
+
+        fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/user_registration.php', {
+            method: 'POST',
+            header:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name:this.state.username,
+                password:this.state.password,
+                email:this.state.email,
+                fullname:this.state.fullname,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) =>{
+                alert(responseJson)})
+                .catch((error)=>{
+                    console.error(error);
+                })
     }
 
     goBack=() =>{
@@ -144,7 +162,6 @@ const styles = StyleSheet.create({
             marginBottom: 50,
         },
         logoText:{
-            fontcolor: '#C04A3F',
             fontSize: 35,
             fontWeight: '500',
             marginBottom: 20,

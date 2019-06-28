@@ -1,42 +1,46 @@
 import React from 'react';
-import {FlatList, ActivityIndicator, Text, View} from 'react-native';
+import {View, Text} from 'react-native';
 
-export default class FetchExample extends React.Component{
-
-    constructor(props){
+class HTTPRequests extends React.Component {
+    constructor(props) {
         super(props);
-        this.state={isLoading: true}
-        this.state={dataSource: null}
+        this.state = {
+            data: '',
+            routename: 'Test',
+        }
     }
-    componentDidMount() {
-        return fetch('https://facebook.github.io/react-native/movies.json')
+
+    componentDidMount = () => {
+        // https://facebook.github.io/react-native/movies.json
+        // ic-research.eastus.cloudapp.azure.com/~mrue/route.json
+        fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/getroute.php', {
+            method: 'POST',
+            header:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                routename: ''
+            })
+        })
             .then((response) => response.json())
             .then((responseJson) => {
-                this.setState({
-                    isLoading: false,
-                    dataSource: responseJson.movies,
-                }, function(){
-
-                });
+                console.log(responseJson);
             })
-            .catch((error) =>{
+            .catch((error) => {
                 console.error(error);
-            })
+            });
     }
 
-    render(){
-        if(this.state.isLoading){
-            return(
-                <View style={{flex: 1, padding: 20, marginTop: 100, marginLeft: 50,}}>
-                    <ActivityIndicator/>
-                </View>
-            )
-        }
-        return(
-            <View style={{flex: 1, padding: 20, marginTop: 100, marginLeft: 50}}>
-                <FlatList data={this.state.dataSource} renderItem={({item}) => <Text>{item.title}, {item.releaseYear}</Text>}
-                keyExtractor={({id}, index) => id}/>
+    render() {
+        return (
+            <View>
+                <Text>
+                    {this.state.data.body}
+                </Text>
             </View>
         )
     }
 }
+export default HTTPRequests
+

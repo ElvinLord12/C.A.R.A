@@ -1,31 +1,24 @@
 import sqlite3
-connection = sqlite3.connect('C:\\Users\\Milo Rue\\MockupApp\\app\\db\\test.db')
 
+def dict_factory(cursor, row):
+    d = {}
+    for idx, col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+connection = sqlite3.connect('C:\\Users\\Milo Rue\\MockupApp\\app\\db\\test.db')
+connection.row_factory = dict_factory
+
+# connect to the database check
 print("Database connected successfully")
 
-def insert_sqlite():
-    connection.execute("INSERT INTO COOP(ID,NAME,AGE,ADDRESS,SALARY) \
-      VALUES (1, 'Paul', 32, 'California', 20000.00 )");
+cursor = connection.cursor()
+cursor.execute("INSERT INTO USERS VALUES(2,'barr','ICCS19','barr@ithaca.edu','John Barr');")
+cursor.execute("SELECT * from USERS")
 
-    connection.execute("INSERT INTO COOP(ID,NAME,AGE,ADDRESS,SALARY) \
-      VALUES (2, 'Allen', 25, 'Texas', 15000.00 )");
+results = cursor.fetchall()
 
-    connection.execute("INSERT INTO COOP(ID,NAME,AGE,ADDRESS,SALARY) \
-      VALUES (3, 'Teddy', 23, 'Norway', 20000.00 )");
-
-    connection.execute("INSERT INTO COOP(ID,NAME,AGE,ADDRESS,SALARY) \
-      VALUES (4, 'Mark', 25, 'Rich-Mond ', 65000.00 )");
-
-    connection.commit()
-
-    print("Tabled created")
-
-cursor = connection.execute("SELECT id,name,address,salary from COOP")
-for row in cursor:
-    print("ID = ", row[0])
-    print("NAME = ", row[1])
-    print("ADDRESS = ", row[2])
-    print("SALARY = ", row[3], "\n")
+print(results)
 
 print("Operations completed success")
 connection.close

@@ -1,9 +1,10 @@
 import React from 'react';
-import {View, Text, Button, StyleSheet, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert, AlertIOS} from 'react-native'
+import {View, Text, StyleSheet, Switch, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert, AlertIOS} from 'react-native'
 import {LinearGradient} from 'expo'
 import {createStackNavigator, createAppContainer} from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SignupScreen from "./SignupScreen";
+import { Button } from 'react-native-elements'
 
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -15,6 +16,7 @@ export default class LoginScreen extends React.Component {
             showPass: true,
             username: '',
             password: '',
+            switch1: false,
         }
     }
     onEyePress = () => {
@@ -22,8 +24,41 @@ export default class LoginScreen extends React.Component {
             showPass: !this.state.showPass
         })
     };
+
+    toggleDisableSwitch = (value) => {
+        this.setState({switch1: value})
+        console.log('DisabledSwitch is: ' + value)
+    }
     onLoginPress=()=>{
-        this.props.navigation.navigate('Map')
+
+        fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/login.php', {
+            method: 'POST',
+            header:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name:this.state.username,
+                password:this.state.password,
+            })
+        })
+            .then((response) => response.json())
+            .then((responseJson) =>{
+                if(responseJson === "Succeeded"){
+                    alert(responseJson)
+                    console.log(responseJson)
+                    this.props.navigation.navigate('Profile',{
+            username: this.state.username,
+        })
+                }else{
+                    alert("Incorrect Login")
+                    console.log(responseJson)
+                }
+                })
+                .catch((error)=>{
+                    console.error(error);
+                })
+
     };
     render() {
         return (
@@ -31,6 +66,9 @@ export default class LoginScreen extends React.Component {
                 <View style={styles.logoContainer}>
                     <Icon name={'wheelchair'} size={80} color={'rgba(255,255,255,0.7)'}/>
                     <Text style={styles.logoText}>B-ABLE</Text>
+                    <Switch
+                    onValueChange = {this.toggleDisableSwitch}
+                    value = {this.state.switch1}/>
                 </View>
                 <View style={styles.inputContainer}>
                     <Icon name={'user'} size={20} color={'rgba(255,255,255,0.7)'}
@@ -50,7 +88,9 @@ export default class LoginScreen extends React.Component {
                         placeholder={'Password'}
                         secureTextEntry={this.state.showPass}
                         placeholderTextColor={'rgba(255,255,255,0.7)'}
-                        underlineColorAndroid='transparent'/>
+                        underlineColorAndroid='transparent'
+                        onChangeText={(password) => this.setState({password})}/>
+
 
                         <TouchableOpacity style={styles.eyeSeeYou}
                         onPress={this.onEyePress}>
