@@ -61,10 +61,12 @@ export default class SignupScreen extends React.Component {
     }
     render() {
         return (
-            <LinearGradient colors={['#3FB5C0','#C04A3F']} style={styles.backgroundContainer}>
+            <LinearGradient colors={['#003B71','#0066c3']} style={styles.backgroundContainer}>
                 <View style={styles.logoContainer}>
-                    <Icon name={'wheelchair'} size={80} color={'rgba(255,255,255,0.7)'}/>
-                    <Text style={styles.logoText}>B-ABLE</Text>
+                    {/*<Image source={{uri: 'https://www.ithaca.edu/css/cs/marcom/templates/IC-2L-Left-White.png'}}*/}
+                           {/*style={{width: WIDTH/1.5, height: 160}}/>*/}
+                           <Icon name={'wheelchair'} size={80} color={'rgba(255,255,255,0.7)'}/>
+                    <Text style={styles.logoText}>Accessibility</Text>
                 </View>
                 <View style={styles.inputContainer}>
                     <Icon name={'user'} size={20} color={'rgba(255,255,255,0.7)'}
@@ -150,7 +152,7 @@ const styles = StyleSheet.create({
             flex: 1,
             width: null,
             height: null,
-            justifyContent: 'center',
+            paddingTop: 30,
             alignItems: 'center',
         },
         logo: {
@@ -159,7 +161,7 @@ const styles = StyleSheet.create({
         },
         logoContainer: {
             alignItems: 'center',
-            marginBottom: 50,
+            marginBottom: 25,
         },
         logoText:{
             fontSize: 35,
@@ -197,7 +199,7 @@ const styles = StyleSheet.create({
             width: WIDTH/2 - 20,
             height: 45,
             borderRadius: 25,
-            backgroundColor: 'rgba(63,181,192,0.5)',
+            backgroundColor: 'rgba(0,0,0,0.35)',
             color: 'rgba(255,255,255,0.7)',
             marginHorizontal: 20,
             marginTop: 25,

@@ -72,12 +72,8 @@ class PolylineCreator extends React.Component {
       console.log(this.state.markers.toString())
   }
 
-  createMarker(){
-      if(this.state.coordinatez !== null){
-          return <MapMarker
-      coordinate={this.state.coordinatez}/>
-      }
-
+  getInitialState(){
+      return{}
   }
 
   render() {
@@ -110,7 +106,11 @@ class PolylineCreator extends React.Component {
               strokeWidth={1}
             />
           )}
-            {this.createMarker()}
+            {this.state.markers.map(marker =>{
+                return (<MapMarker
+            coordinate={marker.latlng}/>)
+            })}
+
         </MapView>
         <View style={styles.buttonContainer}>
           {this.state.editing && (

@@ -13,11 +13,12 @@ import MapView, {Marker, AnimatedRegion, Polyline, ProviderPropType} from 'react
 import rawData from "./gpxTrace.js"
 import Icon from 'react-native-vector-icons/FontAwesome'
 import {Input, Button,} from 'react-native-elements'
-import Drawer from 'react-native-drawer'
-import Sidebar from 'C:/Users/Milo Rue/MockupApp/app/components/MapDrawer'
 import MapCallout from "react-native-maps/lib/components/MapCallout";
 import MarkerArray from "../examples/MarkerArray";
 import PolylineCreator from "../examples/LineCreator";
+import MarkerScreen from './AddMarkerScreen'
+import MenuDrawer from 'react-native-side-drawer'
+import {createDrawerNavigator, createAppContainer} from "react-navigation";
 
 const screen = Dimensions.get('window');
 
@@ -84,13 +85,18 @@ var mapStyle = [
   }
 ]
 
-export default class App extends Component {
+class App extends Component {
+
+    static navigationOptions = {
+        drawerLabel: 'Options',
+    }
 
     constructor(props){
         super(props);
         this.state = {
             data: null,
             isLoading: true,
+            markerLoading: true,
             routename: 'Williams to Textor',
             routesearch: '',
             markers: [{
@@ -98,10 +104,13 @@ export default class App extends Component {
                     longitude: -76.49429,
             }],
             dataSource: rawData.slice(),
+            buildings: [{
+                latitude: 42.42280,
+                longitude: -76.49429,
+            }],
+            drawerOpen: false,
         }
     }
-    closeSidePanel = () => {
-        console.log("sidepanel opened")}
 
     componentDidMount() {
     return fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/constRoute.php')
@@ -114,6 +123,35 @@ export default class App extends Component {
             })
             .catch((error) =>{
                 console.error(error)
+            })
+    }
+
+        toggleOpen = () =>{
+        this.setState({drawerOpen: !this.state.drawerOpen});
+        this.props.navigation.toggleDrawer()
+    };
+
+    sidebarContent = () => {
+        return(
+            <TouchableOpacity onPress={this.toggleOpen()}><Text>Close</Text></TouchableOpacity>
+        )
+    }
+
+    renderMarkers(){
+        fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/showMarkers.php')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({markerLoading: false,
+                markers: responseJson,},function(){})
+            })
+    }
+
+    renderBuildings(){
+        fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/loadBuildings.php')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({markerLoading: false,
+                buildings: responseJson,},function(){})
             })
     }
 
@@ -187,13 +225,10 @@ export default class App extends Component {
 
 
             <View style={styles.container}>
-                <Drawer ref={(ref) => {this._drawer = ref;}} content={<Sidebar/>}/>
                 <MapView
                     provider={this.props.provider}
                     style={styles.map}
                     customMapStyle={mapStyle}
-                    ref={ref => {this.map = ref;}}
-                    onPress={e => this.addMarker(e)}
                     initialRegion={{
                         latitude: 42.42268,
                         longitude: -76.4952,
@@ -214,11 +249,11 @@ export default class App extends Component {
                     {/*{this.renderMarker(42.42005,-76.49622, "Terrace Dining Hall")}*/}
                     {/*{this.renderMarker(42.42007,-76.49603, "Terrace 1")}*/}
                     {/*{this.renderMarker(42.41985,-76.4965, "Terrace 2")}*/}
-                    <Marker coordinate={{latitude: 42.422326040000001512453309260308742523193359375,longitude: -76.495359750000005760739441029727458953857421875}} title={"Stairs"}
-                    >
-                        <Image source={require('C:/Users/Milo Rue/MockupApp/assets/stairs.png'
-                    )}/>
-                    </Marker>
+                    {/*<Marker coordinate={{latitude: 42.422326040000001512453309260308742523193359375,longitude: -76.495359750000005760739441029727458953857421875}} title={"Stairs"}*/}
+                    {/*>*/}
+                        {/*<Image source={require('C:/Users/Milo Rue/MockupApp/assets/stairs.png'*/}
+                    {/*)}/>*/}
+                    {/*</Marker>*/}
                     <Polyline coordinates={this.state.dataSource} strokeWidth={5}
                     strokeColor={"#F89594"}
                     tappable={true}
@@ -229,16 +264,25 @@ export default class App extends Component {
                         coordinate={marker}
                         draggable/>
                     ))}
+                    {this.renderBuildings()}
+                    {this.state.buildings.map( building =>(
+                        <Marker
+                            title={building["buildingName"]}
+                        coordinate={building}>
+                            <Image source={require("C:\\Users\\Milo Rue\\MockupApp\\assets\\icons\\campus.png")}/>
+                        </Marker>
+                    ))}
                 </MapView>
                 <MapCallout>
                     <View style={styles.searchBarView}>
+
                         <Button
-                            onPress= {() => {this.addMarkersDB()
+                            onPress= {() => {this.toggleOpen()
 
                     }} type ="outline"
                             raised={true}
                         icon={{
-                            type: "FontAwesome",
+                            type: "font-awesome",
                             name: 'bars',
                             size: 30,
                             color: "black",
@@ -282,6 +326,7 @@ App.propTypes = {
 const styles = StyleSheet.create({
     container: {
         ...StyleSheet.absoluteFillObject,
+
     },
     map: {
         ...StyleSheet.absoluteFillObject,
@@ -309,3 +354,16 @@ const styles = StyleSheet.create({
     }
 
 });
+
+const drawerNav = createDrawerNavigator({
+    MapOptions: {
+        screen: App
+    },
+    Markers: {
+        screen: MarkerScreen
+    }
+})
+
+const MyApp = createAppContainer(drawerNav)
+
+export default MyApp;

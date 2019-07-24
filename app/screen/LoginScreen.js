@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, Switch, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert, AlertIOS} from 'react-native'
+import {View, Text, StyleSheet, Switch, ImageBackground, Image, TextInput, TouchableOpacity, Dimensions, Alert, AlertIOS, ScrollView} from 'react-native'
 import {LinearGradient} from 'expo'
 import {createStackNavigator, createAppContainer} from "react-navigation";
 import Icon from 'react-native-vector-icons/FontAwesome'
 import SignupScreen from "./SignupScreen";
 import { Button } from 'react-native-elements'
+
 
 
 const {width: WIDTH} = Dimensions.get('window');
@@ -62,16 +63,21 @@ export default class LoginScreen extends React.Component {
     };
     render() {
         return (
-            <LinearGradient colors={['#3FB5C0','#C04A3F']} style={styles.backgroundContainer}>
+            <ScrollView contentContainerStyle={styles.backgroundContainer} overScrollMode={'always'}>
+            <View>
+            <LinearGradient colors={['#FFFFFF','#FFFFFF']} style={styles.backgroundContainer}>
                 <View style={styles.logoContainer}>
-                    <Icon name={'wheelchair'} size={80} color={'rgba(255,255,255,0.7)'}/>
-                    <Text style={styles.logoText}>B-ABLE</Text>
+                    {/*<Image source={{uri: 'https://www.ithaca.edu/css/cs/marcom/templates/IC-2L-Left-White.png'}}*/}
+                           {/*style={{width: WIDTH/1.5, height: 160}}/>*/}
+                    {/*<Icon name={'wheelchair'} size={80} color={"#3c5cc3"}/>*/}
+                    <Text style={styles.logoText}>IC ACCESS</Text>
                     <Switch
                     onValueChange = {this.toggleDisableSwitch}
                     value = {this.state.switch1}/>
+                    <Text style={styles.switchText}>Enable Accessible Buttons</Text>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Icon name={'user'} size={20} color={'rgba(255,255,255,0.7)'}
+                    <Icon name={'user'} size={20} color={'#FFFFFF'}
                     style={styles.inputIcon}/>
                     <TextInput
                     style={styles.inputs}
@@ -81,7 +87,7 @@ export default class LoginScreen extends React.Component {
                     underlineColorAndroid='transparent'/>
                 </View>
                 <View style={styles.inputContainer}>
-                    <Icon name={'lock'} size={20} color={'rgba(255,255,255,0.7)'}
+                    <Icon name={'lock'} size={20} color={'#FFFFFF'}
                           style={styles.inputIcon}/>
                     <TextInput
                         style={styles.inputs}
@@ -108,6 +114,8 @@ export default class LoginScreen extends React.Component {
                     </TouchableOpacity>
                 </View>
             </LinearGradient>
+            </View>
+            </ScrollView>
 
 
         );
@@ -120,8 +128,8 @@ const styles = StyleSheet.create({
             flex: 1,
             width: null,
             height: null,
-            justifyContent: 'center',
             alignItems: 'center',
+            paddingTop: 20,
         },
         logo: {
             width: 260,
@@ -135,7 +143,8 @@ const styles = StyleSheet.create({
             fontSize: 35,
             fontWeight: '500',
             marginBottom: 20,
-            opacity: 0.5,
+            opacity: 0.8,
+            color: "#003B71",
         },
         inputs:{
             width: WIDTH-55,
@@ -143,7 +152,7 @@ const styles = StyleSheet.create({
             borderRadius: 25,
             fontSize: 12,
             paddingLeft: 45,
-            backgroundColor: 'rgba(0,0,0,0.35)',
+            backgroundColor: '#003B71',
             color: 'rgba(255,255,255,0.7)',
             marginTop: 25,
             marginHorizontal: 25,
@@ -164,12 +173,12 @@ const styles = StyleSheet.create({
             right: 37,
         },
         loginButton:{
-            width: WIDTH/2 - 20,
+            width: WIDTH/2 - 27.5,
             height: 45,
             borderRadius: 25,
-            backgroundColor: 'rgba(63,181,192,0.5)',
+            backgroundColor: '#003B71',
             color: 'rgba(255,255,255,0.7)',
-            marginHorizontal: 20,
+            marginHorizontal: 5,
             marginTop: 25,
             justifyContent: 'center'
         },
@@ -180,7 +189,13 @@ const styles = StyleSheet.create({
 
         },
         buttonContainer: {
-            flexDirection: 'row'
+            flexDirection: 'row',
+            marginHorizontal: 25,
+        },
+        switchText: {
+            fontSize: 16,
+            textAlign: 'center',
+            color: "#000000"
         }
 
     }

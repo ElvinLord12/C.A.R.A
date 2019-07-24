@@ -3,9 +3,9 @@
  import {createBottomTabNavigator, createAppContainer, createStackNavigator} from "react-navigation";
  import MapScreen from './MapScreen'
  import RouteScreen from './RoutesScreen'
+ import MarkerScreen from './AddMarkerScreen'
  import { Card, ListItem, Button, Avatar} from 'react-native-elements'
  import { Container, Header, Content,Tab,Tabs, Left, Right, Body, CardItem, Text} from 'native-base'
- import FileSystem from "react-native-filesystem";
  import Icon from 'react-native-vector-icons/FontAwesome'
  class ProfileScreen extends React.Component{
 
@@ -40,6 +40,7 @@
     }
 
      render(){
+
          const { navigation } = this.props;
          const username = navigation.getParam('username', 'Barack Obama')
 
@@ -81,6 +82,19 @@
                         </Body>
                     </CardItem>
                  </Card>
+                 <Card>
+                     <CardItem>
+                        <Button
+                            onPress={() => this.props.navigation.navigate('Markers')}
+                type={"outline"}
+                icon={{
+                    type: "font-awesome",
+                    name: "plus",
+                    size: 30,
+                    color: "black",
+                }}/>
+                     </CardItem>
+                 </Card>
              </Container>
          )
      }
@@ -112,6 +126,15 @@
                  tabBarLabel: "Routes",
                  tabBarIcon: ({tintColor}) => (
                      <Icon name ="compass" size={20} color={'#7A8485'}/>
+                 )
+             }
+         },
+         Markers: {
+             screen: MarkerScreen,
+             navigationOptions:{
+                 tabBarLabel: "Markers",
+                 tabBarIcon: ({tintColor}) => (
+                     <Icon name ="plus" size={20} color={'#7A8485'}/>
                  )
              }
          }
