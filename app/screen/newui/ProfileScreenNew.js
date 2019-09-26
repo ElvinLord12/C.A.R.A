@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Dimensions, Text, StyleSheet, Image, ImageBackground, TextInput, TouchableOpacity, Button} from 'react-native'
 import {Icon, Avatar} from 'react-native-elements'
-import {createMaterialBottomTabNavigator,} from "react-navigation-material-bottom-tabs";
 import {createAppContainer} from "react-navigation";
 
 const {width: WIDTH} = Dimensions.get('window');

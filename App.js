@@ -21,7 +21,7 @@ import MapV2 from './app/screen/newui/MapScreenV2'
 const Nav = createStackNavigator(
     {
         Home: {
-            screen: ProfileV2,
+            screen: LoginV2,
             navigationOptions: {
                 header: null,
             }
@@ -46,7 +46,7 @@ const Nav = createStackNavigator(
             }
         },
         Routes: {
-             screen: LineCreator,
+             screen: MapScreen,
              navigationOptions: {
                  header: null
              }

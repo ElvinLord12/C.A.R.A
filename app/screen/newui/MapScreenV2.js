@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Platform, Picker, View, Text, Dimensions, TouchableOpacity, Alert, TextInput, Image, StyleSheet} from 'react-native';
 import MapCallout from "react-native-maps/lib/components/MapCallout";
 import {createDrawerNavigator, createAppContainer} from "react-navigation";
-import MapView, {Marker, AnimatedRegion, Polyline, ProviderPropType} from 'react-native-maps';
-import {Icon, Button} from 'react-native-elements';
+import MapView, {Marker, AnimatedRegion, Polyline, ProviderPropType, Callout} from 'react-native-maps';
+import {Icon, Button, ListItem} from 'react-native-elements';
 import Modal from 'react-native-modalbox'
 
 
@@ -301,7 +301,7 @@ export default class MapScreenV2 extends Component{
                 latitude: 42.42280,
                 longitude: -76.49429,
             }],
-            markerImage: 'C:\\Users\\Milo Rue\\MockupApp\\assets\\icons\\mapDefault.png'
+            markerImage: require('C:\\Users\\Milo Rue\\MockupApp\\assets\\icons\\mapDefault.png')
         }
     }
 
@@ -392,31 +392,31 @@ export default class MapScreenV2 extends Component{
 
     determineMarker(markerType){
         if(markerType==="stair"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapStair.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapStair.png"))
         }
         else if(markerType==="hazard"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapHazard.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapHazard.png"))
         }
         else if(markerType==="disabled"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapDefault.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapDefault.png"))
         }
         else if(markerType==="info"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapInfo.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapInfo.png"))
         }
-        else if(markerType==="maintenance"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapMaintain.png")
+        else if(markerType==="construct"){
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapMaintain.png"))
         }
         else if(markerType==="parking"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapParking.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapParking.png"))
         }
         else if(markerType==="entrance"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapDoor.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapDoor.png"))
         }
         else if(markerType==="toilet"){
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapToilet.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapToilet.png"))
         }
         else{
-            return("C://Users/Milo Rue/MockupApp/assets/icons/mapDefault.png")
+            return(require("C://Users/Milo Rue/MockupApp/assets/icons/mapDefault.png"))
         }
     }
 
@@ -444,6 +444,19 @@ export default class MapScreenV2 extends Component{
         console.log(boundingBox);
 
         return boundingBox;
+    }
+
+    markModal(mark){
+        return(<Modal
+                style={styles.settings} position={"center"} ref={"moreModal"}>
+                        <View>
+                            <Text>Marker Name: {mark["name"]}</Text>
+                            <Text>Marker Type: {mark["id"]}</Text>
+                            <Text>Description: {mark["description"]}</Text>
+                            <Text>Latitude: {mark["latitude"]}</Text>
+                            <Text>Longitude: {mark["longitude"]}</Text>
+                        </View>
+                </Modal>)
     }
 
 
@@ -520,9 +533,9 @@ export default class MapScreenV2 extends Component{
                         </Picker>
 
                         </View>
-                        <TouchableOpacity onPress={()=>{this.getBoundingBox(this.state.buildings[0]["latitude"], this.state.buildings[0]["longitude"])}}>
+                        <View>
                                <Text>Use Current Location as Start</Text>
-                            </TouchableOpacity>
+                        </View>
                         <View style={styles.searchBar}>
                         <Picker selectedValue={this.state.endName}
                                     style={{width: WIDTH/1.5, height: WIDTH/7}}
@@ -616,8 +629,17 @@ export default class MapScreenV2 extends Component{
                     {this.state.markers.map(marker =>(
                         <Marker
                         title={marker["name"]}
-                        coordinate={marker}>
-                            <Image source={require('C:\\Users\\Milo Rue\\MockupApp\\assets\\icons\\mapDefault.png')}/>
+                        coordinate={marker}
+                        image={this.determineMarker(marker["id"])}>
+                            <Callout>
+                                <View>
+                                    <Text>Marker Name: {marker["name"]}</Text>
+                                    <Text>Marker Type: {marker["id"]}</Text>
+                                    <Text>Description: {marker["description"]}</Text>
+                                    <Text>Latitude: {marker["latitude"]}</Text>
+                                    <Text>Longitude: {marker["longitude"]}</Text>
+                                </View>
+                            </Callout>
                         </Marker>
                     ))}
                 </MapView>

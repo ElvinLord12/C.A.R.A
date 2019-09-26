@@ -334,7 +334,11 @@ export default class MarkerScreen extends Component {
 
     postMarker(){
 
-        this.refs.markerModal.close()
+        console.log(this.state.coordinate)
+        console.log(this.state.markerTitle)
+        console.log(this.state.featureName)
+        console.log(this.state.building)
+        console.log(this.state.description)
 
         fetch('http://ic-research.eastus.cloudapp.azure.com/~mrue/loadCustomMarker.php',{
             method: 'POST',
@@ -404,7 +408,7 @@ export default class MarkerScreen extends Component {
         else if(markerType==="info"){
             this.setState({markerImage: require("C://Users/Milo Rue/MockupApp/assets/icons/information.png")})
         }
-        else if(markerType==="maintenance"){
+        else if(markerType==="construct"){
             this.setState({markerImage: require("C://Users/Milo Rue/MockupApp/assets/icons/construction.png")})
         }
         else if(markerType==="parking"){
@@ -464,7 +468,7 @@ export default class MarkerScreen extends Component {
                             </View>
 
                             <View style={styles.markerMargins}>
-                                    <TouchableOpacity onPress={() => {this.setMarker("maintenance")}}>
+                                    <TouchableOpacity onPress={() => {this.setMarker("construct")}}>
                                     <Image style={{marginHorizontal: 10}} source={require("C://Users/Milo Rue/MockupApp/assets/icons/construction.png")}/>
                                     </TouchableOpacity>
                                     <Text>Working</Text>
